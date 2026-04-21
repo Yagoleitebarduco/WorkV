@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\City;
+use App\Models\Skill;
+
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
@@ -33,11 +36,22 @@ class User extends Authenticatable
         'bio',
         'password',
     ];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'user_skills');
     }
 }

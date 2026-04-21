@@ -96,7 +96,7 @@ class SkillsSeed extends Seeder
 
         foreach ($this->skills as $category => $skillNames) {
             foreach ($skillNames as $skillName) {
-                DB::table('skils')->insert([
+                DB::table('skills')->insert([
                     'skill_name' => $skillName,
                     'category' => $category,
                     'created_at' => now(),

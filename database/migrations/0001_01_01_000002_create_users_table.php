@@ -20,11 +20,11 @@ return new class extends Migration
             // Dados Pessoais (Freelancer)
             $table->string('profile_picture')->nullable();
             $table->string('complete_name');
-            $table->integer('cpf')->unique();
+            $table->string('cpf')->unique();
             $table->date('birth_date');
 
             // Contato
-            $table->integer('phone_number')->nullable();
+            $table->string('phone_number')->unique();
             $table->string('email')->unique();
 
             // Localização
@@ -33,8 +33,6 @@ return new class extends Migration
 
             // Perfil Profissional
             $table->string('professional_title');
-            // Pesar em forma de criar
-            // $table->foreign('skils_id')->constrained('skils')->onDelete('cascade');
             $table->string('portfolio_link')->nullable();
             $table->text('bio')->nullable();
 
@@ -56,6 +54,7 @@ return new class extends Migration
             // Validações
             $table->integer('cnpj_cpf')->unique();
             $table->string('area_operation');
+            $table->integer('assessment');
 
             // Contato
             $table->string('representative_name');
