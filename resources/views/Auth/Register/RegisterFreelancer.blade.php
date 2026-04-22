@@ -258,7 +258,7 @@
 
             <!-- Botões de Ação -->
             <div class="flex gap-3 pt-4">
-                <a href="{{ route('login') }}"
+                <a href="{{ route('register') }}"
                     class="flex-1 text-center px-6 py-3 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition cursor-pointer">
                     Cancelar</a>
 

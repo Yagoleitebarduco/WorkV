@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function skills()
     {
-        return $this->belongsToMany(Skills::class, 'user_skills');
+        return $this->belongsToMany(Skills::class, 'skill_user', 'user_id', 'skill_id');
     }
 }

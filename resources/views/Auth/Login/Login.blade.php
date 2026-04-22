@@ -96,7 +96,7 @@
                 <div class="text-center mt-6 pt-4 border-t border-gray-100">
                     <p class="text-sm text-gray-600">
                         Não tem uma conta?
-                        <a href="{{ route('register.freelancer') }}" id="signupLink"
+                        <a href="{{ route('register') }}" id="signupLink"
                             class="font-semibold py-1rounded-2xl text-Primary-dark">
                             Cadastre-se
                         </a>

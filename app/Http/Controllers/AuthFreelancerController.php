@@ -25,6 +25,8 @@ class AuthFreelancerController extends Controller
 
     public function registerfreelancer(Request $request)
     {
+        //dd($request->all());
+
         $date_min = Carbon::now()->subYears(18)->format('Y-m-d');
 
         $request->validate(
@@ -50,6 +52,10 @@ class AuthFreelancerController extends Controller
                     'unique:users,email',
                     'unique:company,email'
                 ],
+
+                // Validação de Skills
+                'skills' => 'nullable|array',
+                'skills*id' => 'exists:skills,id'
             ],
             [
                 'birth_date.before_or_equal' => 'Você deve ser maior de 18 anos para se cadastrar.',
@@ -69,24 +75,8 @@ class AuthFreelancerController extends Controller
 
         $user = User::create($request->all());
 
-        if ($request->has('skills')) {
-            $user->skills()->sync($request->skills);
-        }
-
-        // User::create([
-        //     'complete_name' => $request->complete_name,
-        //     'cpf' => $request->cpf,
-        //     'birth_date' => $request->birth_date,
-        //     'phone_number' => $request->phone_number,
-        //     'email' => $request->email,
-        //     'city_id' => $request->city_id,
-        //     'address' => $request->address,
-        //     'professional_title' => $request->professional_title,
-        //     'portfolio_link' => $request->portfolio_link,
-        //     'bio' => $request->bio,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
+        $user->skills()->sync($request->skills);
+       
         return redirect()->route('login');
     }
 }

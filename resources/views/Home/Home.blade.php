@@ -28,6 +28,16 @@
         <h2 class="text-2xl font-semibold text-white mb-1">
             Olá, <span class=" font">{{ Auth::user()->complete_name }}</span>
         </h2>
+
+        <div>
+            <form action="{{ route('logout') }}" method="post" class="mx-2 p-2 w-20 rounded-2xl text-black bg-Primary-light  text-center">
+                @csrf
+                <button type="submit" class="cursor-pointer">
+                    Sair
+                </button>
+            </form>
+            
+        </div>
         <p class="text-xs text-gray-300">3 novos desafios disponíveis para você</p>
     </div>
 
