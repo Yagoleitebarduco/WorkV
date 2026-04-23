@@ -13,6 +13,6 @@ class HomeController extends Controller
     }
 
     public function showToHomeScreen() {
-        return view("Home.Home");
+        return view("Home.User.Home");
     }
 }

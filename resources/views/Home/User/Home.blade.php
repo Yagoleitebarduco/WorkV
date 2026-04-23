@@ -30,13 +30,14 @@
         </h2>
 
         <div>
-            <form action="{{ route('logout') }}" method="post" class="mx-2 p-2 w-20 rounded-2xl text-black bg-Primary-light  text-center">
+            <form action="{{ route('logout') }}" method="post"
+                class="mx-2 p-2 w-20 rounded-2xl text-black bg-Primary-light  text-center">
                 @csrf
                 <button type="submit" class="cursor-pointer">
                     Sair
                 </button>
             </form>
-            
+
         </div>
         <p class="text-xs text-gray-300">3 novos desafios disponíveis para você</p>
     </div>
@@ -123,10 +124,21 @@
                     <p class="text-lg font-bold text-Success">R$ 1.200</p>
                 </div>
 
-                <a href="#"
+                <button x-data @click="$dispatch('open-modal', {name: 'works'})"
                     class="bg-Primary text-white px-4 py-2 rounded-lg font-medium hover:bg-Primary-dark transition-colors duration-300">
                     Ver detalhes <i class="fas fa-arrow-right text-xs ml-2"></i>
-                </a>
+                </button>
+
+                <x-modal-works name="works" title="teste">
+                    <div class="p-4">
+                        <p>Esta ação é irreversível.</p>
+
+                        <form action="/delete" method="POST">
+                            @csrf
+                            <button type="submit">Sim, eliminar</button>
+                        </form>
+                    </div>
+                </x-modal-works>
             </div>
         </div>
     </div>

@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class WaletController extends Controller
 {
     public function showToWaletScreen() {
-        return view('Home.Walet');
+        return view('Home.User.Walet');
     }
 }

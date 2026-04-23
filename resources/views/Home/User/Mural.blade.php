@@ -9,19 +9,14 @@
     <div class="mb-6">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
-                <a href="#"
-                    class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-600 hover:shadow-md transition">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
                 <h1 class="text-2xl font-bold text-white">Mural de Oportunidades</h1>
             </div>
 
             <div class="relative">
-                <button id="filterModalBtn"
+                <button
                     class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-600 hover:shadow-md transition">
-                    <i class="fas fa-sliders-h"></i>
+                    <i class="fas fa-sliders-h text-Primary-dark"></i>
                 </button>
-                <span class="--primary-dark"></span>
             </div>
         </div>
 
