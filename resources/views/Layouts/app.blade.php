@@ -31,17 +31,20 @@
                 <span class=" text-xs mt-1">Início</span>
             </a>
 
-            <a href="#" class="flex flex-col items-center decoration-0 text-gray-600">
+            <a href="{{ route('mural') }}"
+                class="flex flex-col items-center decoration-0 {{ request()->routeIs('mural') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
                 <i class="fas fa-chart-bar text-lg"></i>
                 <span class=" text-xs mt-1">Mural</span>
             </a>
 
-            <a href="#" class="flex flex-col items-center decoration-0 text-gray-600">
+            <a href="{{ route('myjobs') }}"
+                class="flex flex-col items-center decoration-0 {{ request()->routeIs('myjobs') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
                 <i class="fas fa-briefcase text-lg"></i>
                 <span class=" text-xs mt-1">Meus Jobs</span>
             </a>
 
-            <a href="#" class="flex flex-col items-center decoration-0 text-gray-600">
+            <a href="{{ route('walet') }}"
+                class="flex flex-col items-center decoration-0 {{ request()->routeIs('walet') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
                 <i class="fas fa-wallet text-lg"></i>
                 <span class=" text-xs mt-1">Carteira</span>
             </a>
