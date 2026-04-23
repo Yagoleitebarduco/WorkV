@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthFreelancerController;
 use App\Http\Controllers\AuthCompanyController;
 use App\Http\Controllers\LoginController;
+
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MuralController;
+use App\Http\Controllers\MyJobsController;
+use App\Http\Controllers\WaletController;
 
 
 // Rotas de Login e logout
@@ -30,4 +34,10 @@ Route::get('/register/company', [AuthCompanyController::class, 'showToRegisterCo
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'showToHomeScreen'])->name('home');
+
+    Route::get('/mural', [MuralController::class, 'showToMuralScreen'])->name('mural');
+
+    Route::get('/myjobs', [MyJobsController::class, 'showToMyJobsScreen'])->name('myjobs');
+
+    Route::get('/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
 });
