@@ -84,7 +84,7 @@ class AreaDeAtuacaoSeeder extends Seeder
             ['area_name' => 'Indústria Moveleira', 'area_category' => 'Indústria'],
         ];
 
-        DB::table('area_de_atuacao')->insert($areas);
+        DB::table('area_de_atuacoes')->insert($areas);
         
         $this->command->info(count($areas) . ' áreas de atuação cadastradas com sucesso!');
     }

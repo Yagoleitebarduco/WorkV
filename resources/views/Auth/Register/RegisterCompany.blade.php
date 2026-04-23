@@ -44,7 +44,7 @@
                             Razão Social ou Nome Fantasia <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="razao_social" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Nome da empresa" required>
                     </div>
 
@@ -53,7 +53,7 @@
                             CNPJ ou CPF <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text" id="cnpj_cpf"
+                        <input type="text" id="cnpj_cpf" name="documento"
                             class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="00.000.000/0000-00 ou 000.000.000-00" required>
                     </div>
@@ -85,7 +85,7 @@
                             Senha <span class="text-red-500">*</span>
                         </label>
                         <div>
-                            <input type="password" id="password"
+                            <input type="password" id="password" name="password"
                                 class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white pr-10"
                                 placeholder="Crie uma senha segura" required>
                         </div>
@@ -105,7 +105,7 @@
                         Pequena descrição da empresa <span class="text-red-500">*</span>
                     </label>
 
-                    <textarea rows="5" class="form-textarea w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white resize-none"
+                    <textarea name="descricao" rows="5" class="form-textarea w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white resize-none"
                         placeholder="Descreva sua empresa, missão, valores e área de atuação..." required></textarea>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Nome do Responsável/Recrutador <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="nome_responsavel" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Nome completo do responsável" required>
                     </div>
 
@@ -130,7 +130,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             E-mail Corporativo <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="email" name="email" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="empresa@email.com" required>
                     </div>
 
@@ -138,7 +138,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Telefone de Contato da Empresa <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="phone_number"
+                        <input type="text" name="telefone" id="phone_number"
                             class="w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="(99) 99999-9999" required>
                     </div>
@@ -158,7 +158,7 @@
                             Cidade Sede <span class="text-red-500">*</span>
                         </label>
 
-                        <select class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white" required>
+                        <select  class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"  required name="cidade">
                             <option value="">Selecione a cidade sede</option>
                             <option>Registro</option>
                             <option>Juquiá</option>
@@ -180,7 +180,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Endereço Completo <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="endereco" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Rua, número, complemento" required>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
             <!-- Termos e Condições -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <div class="flex items-start gap-3">
-                    <input type="checkbox" id="terms" class="w-5 h-5 rounded border-gray-300 accent-Primary"
+                    <input type="checkbox" name="termos" id="terms" class="w-5 h-5 rounded border-gray-300 accent-Primary"
                         required>
 
                     <label for="terms" class="text-sm text-gray-600">
