@@ -20,6 +20,10 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $casts = [
+        'is_freelancer' => 'boolean',
+    ];
+    
     protected $fillable = [
         'is_admin',
         'is_freelancer',

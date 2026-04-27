@@ -45,6 +45,8 @@ return new class extends Migration
 
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_freelancer')->default(false);
 
             // Nome da Empresa
             $table->string('company_name');

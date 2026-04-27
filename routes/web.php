@@ -34,13 +34,14 @@ Route::post('/register/company', [AuthCompanyController::class, 'registerCompany
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'showToHomeScreen'])->name('home');
+    // User
+    Route::get('/user/home', [HomeController::class, 'showToHomeScreen'])->name('home');
+    Route::get('/user/mural', [MuralController::class, 'showToMuralScreen'])->name('mural');
+    Route::get('/user/myjobs', [MyJobsController::class, 'showToMyJobsScreen'])->name('myjobs');
+    Route::get('/user/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
 
-    Route::get('/mural', [MuralController::class, 'showToMuralScreen'])->name('mural');
-
-    Route::get('/myjobs', [MyJobsController::class, 'showToMyJobsScreen'])->name('myjobs');
-
-    Route::get('/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
+    // Company
+    Route::get('/company/dashboard', [HomeController::class, 'showToDashboardCompanyScreen'])->name('company.dashboard');
 });
 
 

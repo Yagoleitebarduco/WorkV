@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
+
+use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
 {
@@ -13,6 +14,10 @@ class HomeController extends Controller
     }
 
     public function showToHomeScreen() {
-        return view("Home.User.Home");
+        return view('Home.User.Home');
+    }
+
+    public function showToDashboardCompanyScreen() {
+        return view('Home.Company.Dashboard');
     }
 }
