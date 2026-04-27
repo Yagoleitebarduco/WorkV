@@ -41,3 +41,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
 });
+
+
+
+
+// Route::get('/dashboard', function () {
+//     return view('Home.Company.Dashboard');
+// })->name('dashboard');
