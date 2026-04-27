@@ -64,19 +64,10 @@
                         </label>
 
                         <select class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white" required>
-                            <option value="">Selecione a área de atuação</option>
-                            <option>Tecnologia da Informação</option>
-                            <option>Construção Civil</option>
-                            <option>Comércio Varejista</option>
-                            <option>Serviços Gerais</option>
-                            <option>Alimentação</option>
-                            <option>Eventos</option>
-                            <option>Marketing e Publicidade</option>
-                            <option>Consultoria</option>
-                            <option>Educação</option>
-                            <option>Saúde</option>
-                            <option>Agronegócio</option>
-                            <option>Transporte e Logística</option>
+                            <option class="hidden" selected>Selecione a área de atuação</option>
+                            @foreach ($areaActivitys as $areaActivity)
+                                <option value="{{ $areaActivity->id }}">{{ $areaActivity->area_name }}</option>
+                            @endforeach
                         </select>
                     </div>
 

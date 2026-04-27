@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use App\Models\AreaDeAtuacao;
+use App\Models\areaActivity;
 
 class AuthCompanyController extends Controller
 {
@@ -14,8 +14,8 @@ class AuthCompanyController extends Controller
      */
     public function showToRegisterCompany()
     {
-        $areaAtuacoes = AreaDeAtuacao::all();
-        return view('Auth.Register.RegisterCompany',compact("AreaAtuacoes"));
+        $areaActivitys = areaActivity::all();
+        return view('Auth.Register.RegisterCompany', compact("areaActivitys"));
     }
     
     /**
@@ -42,7 +42,7 @@ class AuthCompanyController extends Controller
         $documentoLimpo = preg_replace('/[^0-9]/', '', $request->documento);
         
         // Cadastrar no banco
-        $empresa = Empresa::create([
+        $empresa = areaActivity::create([
             'social_name' => $request->razao_social,
             'cnpj_cpf' => $documentoLimpo,
             'area_atuacao_id' => $request->area_atuacao_id,
