@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name_work');
             $table->string('description_work');
             $table->foreignId('skill_id')->constrained('skills')->onDelete('cascade');
-            $table->foreignId('company_id')->constrained('company')->onDelete('cascade');
+            $table->foreignId('companies_id')->constrained('companies')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->integer('type_work');

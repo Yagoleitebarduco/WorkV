@@ -25,11 +25,12 @@
                 </h1>
             </div>
 
-            <h2 class="text-xl font-semibold text-gray-800 mt-3">Cadastro de Freelancer</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mt-3">Cadastro de Empressa</h2>
             <p class="text-sm text-gray-500 mt-1">Preencha seus dados para criar seu perfil</p>
         </div>
 
-        <form id="registerForm" class="space-y-8">
+        <form id="registerForm" class="space-y-8" action="" method="POST">
+            @csrf
 
             <!-- Seção 1: Dados do Negócio -->
             <div class="form-section bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -44,7 +45,8 @@
                             Razão Social ou Nome Fantasia <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text" name="razao_social" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="company_name"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Nome da empresa" required>
                     </div>
 
@@ -53,9 +55,14 @@
                             CNPJ ou CPF <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text" id="cnpj_cpf" name="documento"
+                        <input type="text" id="cnpj_cpf" name="cnpj_cpf"
                             class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="00.000.000/0000-00 ou 000.000.000-00" required>
+                        @error('cnpj_cpf')
+                            <div class="mt-2 text-sm text-Danger bg-red-50 p-3 rounded-lg border border-Danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div>
@@ -63,7 +70,8 @@
                             Área de Atuação <span class="text-red-500">*</span>
                         </label>
 
-                        <select class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white" required>
+                        <select class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                            name="area_operation" required>
                             <option class="hidden" selected>Selecione a área de atuação</option>
                             @foreach ($areaActivitys as $areaActivity)
                                 <option value="{{ $areaActivity->id }}">{{ $areaActivity->area_name }}</option>
@@ -96,7 +104,8 @@
                         Pequena descrição da empresa <span class="text-red-500">*</span>
                     </label>
 
-                    <textarea name="descricao" rows="5" class="form-textarea w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white resize-none"
+                    <textarea name="description" rows="5"
+                        class="form-textarea w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white resize-none"
                         placeholder="Descreva sua empresa, missão, valores e área de atuação..." required></textarea>
                 </div>
             </div>
@@ -113,7 +122,8 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Nome do Responsável/Recrutador <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="nome_responsavel" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="representative_name"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Nome completo do responsável" required>
                     </div>
 
@@ -121,17 +131,28 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             E-mail Corporativo <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" name="email" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="email" name="email"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="empresa@email.com" required>
+                        @error('email')
+                            <div class="mt-2 text-sm text-Danger bg-red-50 p-3 rounded-lg border border-Danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Telefone de Contato da Empresa <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="telefone" id="phone_number"
+                        <input type="text" name="phone_number" id="phone_number"
                             class="w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="(99) 99999-9999" required>
+                        @error('phone_number')
+                            <div class="mt-2 text-sm text-Danger bg-red-50 p-3 rounded-lg border border-Danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -149,29 +170,47 @@
                             Cidade Sede <span class="text-red-500">*</span>
                         </label>
 
-                        <select  class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"  required name="cidade">
-                            <option value="">Selecione a cidade sede</option>
-                            <option>Registro</option>
-                            <option>Juquiá</option>
-                            <option>Miracatu</option>
-                            <option>Iguape</option>
-                            <option>Cananéia</option>
-                            <option>Ilha Comprida</option>
-                            <option>Jacupiranga</option>
-                            <option>Cajati</option>
-                            <option>Pariquera-Açu</option>
-                            <option>Eldorado</option>
-                            <option>São Paulo</option>
-                            <option>Santos</option>
-                            <option>Curitiba</option>
+                        <select class="form-select w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white" required
+                            name="city_id">
+                            <option class="hidden" selected>Selecione a cidade sede</option>
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name_city }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Endereço Completo <span class="text-red-500">*</span>
+                            CEP <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="endereco" class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                        <input type="text" name="cep" id="cep"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                            placeholder="99999-999" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Endereço <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="address"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
+                            placeholder="Rua, número, complemento" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Bairro <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="neighborhood"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Numero <span class="text-red-500">*</span>
+                        </label>
+                        <input type="number" name="number"
+                            class="form-input w-full px-4 py-2.5 rounded-lg bg-gray-50 focus:bg-white"
                             placeholder="Rua, número, complemento" required>
                     </div>
                 </div>
@@ -180,8 +219,8 @@
             <!-- Termos e Condições -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <div class="flex items-start gap-3">
-                    <input type="checkbox" name="termos" id="terms" class="w-5 h-5 rounded border-gray-300 accent-Primary"
-                        required>
+                    <input type="checkbox" name="termos" id="terms"
+                        class="w-5 h-5 rounded border-gray-300 accent-Primary" required>
 
                     <label for="terms" class="text-sm text-gray-600">
                         Concordo com os
@@ -274,6 +313,8 @@
             $('#cnpj_cpf').maskCPF_CNPJ();
 
             $('#phone_number').mask('(00) 00000-0000');
+
+            $('#cep').mask('00000-000')
         })
     </script>
 </body>

@@ -43,40 +43,34 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('company', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
 
             // Nome da Empresa
             $table->string('company_name');
-            $table->string('social_reason')->nullable();
             $table->text('description')->nullable();
 
             // Validações
-            $table->integer('cnpj_cpf')->unique();
+            $table->string('cnpj_cpf')->unique();
             $table->string('area_operation');
-            $table->integer('assessment');
+            $table->integer('assessment')->nullable();
 
             // Contato
             $table->string('representative_name');
             $table->string('email')->unique();
-            $table->integer('phone_number')->unique();
+            $table->string('phone_number')->unique();
 
             // Localização
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
-            $table->integer('cep');
+            $table->string('cep');
             $table->string('address');
             $table->string('neighborhood');
             $table->integer('number');
-            $table->text('complement')->nullable();
 
             // Segurança
             $table->string('password');
             $table->timestamps();
         });
-
-
-
-
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

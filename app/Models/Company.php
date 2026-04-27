@@ -11,19 +11,27 @@ class Company extends Model
 
     protected $fillable = [
         'company_name',
-        'social_reason',
         'description',
+
         'cnpj_cpf',
         'area_operation',
+        'assessment',
+
         'representative_name',
         'email',
         'phone_number',
+
         'city_id',
         'cep',
         'address',
         'neighborhood',
         'number',
-        'complement',
+        
         'password',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
