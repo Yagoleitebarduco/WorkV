@@ -39,18 +39,18 @@ class AuthFreelancerController extends Controller
                 'cpf' => [
                     'required',
                     'unique:users,cpf',
-                    'unique:company,cnpj_cpf'
+                    'unique:companies,cnpj_cpf'
                 ],
                 'phone_number' => [
                     'required',
                     'unique:users,phone_number',
-                    'unique:company,phone_number'
+                    'unique:companies,phone_number'
                 ],
                 'email' => [
                     'required',
                     'email',
                     'unique:users,email',
-                    'unique:company,email'
+                    'unique:companies,email'
                 ],
 
                 // Validação de Skills
@@ -73,6 +73,7 @@ class AuthFreelancerController extends Controller
             ]
         );
 
+        
         $user = User::create($request->all());
 
         $user->skills()->sync($request->skills);

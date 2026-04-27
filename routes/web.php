@@ -29,6 +29,7 @@ Route::post('/register/freelancer', [AuthFreelancerController::class, 'registerf
 
 ## Registro de Empressa
 Route::get('/register/company', [AuthCompanyController::class, 'showToRegisterCompany'])->name('register.company');
+Route::post('/register/company', [AuthCompanyController::class, 'registerCompany'])->name('register.company');
 
 
 
