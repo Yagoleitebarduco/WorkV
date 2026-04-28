@@ -11,10 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Models\City;
+use App\Models\Company;
 use App\Models\Skill;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
+
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -57,5 +59,9 @@ class User extends Authenticatable
     public function skills()
     {
         return $this->belongsToMany(Skills::class, 'skill_user', 'user_id', 'skill_id');
+    }
+
+    public function company() {
+        return $this->hasOne(Company::class);
     }
 }

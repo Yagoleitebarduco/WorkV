@@ -52,6 +52,11 @@
                             <input type="email" id="email" name="email"
                                 class="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-Primary-dark focus:outline-0 focus:border-2 transition duration-150 ease-in-out"
                                 placeholder="seu@email.com" required>
+                            @error('email')
+                                <div class="mt-2 text-sm text-Danger bg-red-50 p-3 rounded-lg border border-Danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
 

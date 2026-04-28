@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
+
+use function Laravel\Prompts\password;
 
 class LoginController extends Controller
 {
@@ -18,25 +21,10 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-
-        if (Auth::attempt(($credentials))) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            $user = Auth::user();
-            dd($user);
-
-            if ($user->is_freelancer == 1) {
-                return redirect()->route('home');
-            }
-
-            if ($user->is_freelancer == 0) {
-                return redirect()->route('ccompany.dashboard');
-            }
+            return redirect()->route('home');
         }
-
-        return back()->withErrors([
-            'email' => 'Email ou senha inválidos.',
-        ]);
     }
 
     public function logout(Request $request)
