@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -24,9 +25,28 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $cityId = City::query()->value('id');
+
+        if (! $cityId) {
+            $cityId = City::query()->create([
+                'UF' => 'SP',
+                'name_city' => 'Registro',
+            ])->id;
+        }
+
         return [
-            'name' => fake()->name(),
+            'is_admin' => false,
+            'is_freelancer' => true,
+            'complete_name' => fake()->name(),
+            'cpf' => fake()->unique()->numerify('###########'),
+            'birth_date' => fake()->date(),
+            'phone_number' => fake()->unique()->numerify('13#########'),
             'email' => fake()->unique()->safeEmail(),
+            'city_id' => $cityId,
+            'address' => fake()->streetAddress(),
+            'professional_title' => fake()->jobTitle(),
+            'portfolio_link' => fake()->optional()->url(),
+            'bio' => fake()->optional()->sentence(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

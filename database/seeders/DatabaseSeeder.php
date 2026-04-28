@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +17,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            CitySeed::class,
+            SkillsSeed::class,
+            AreaDeAtuacaoSeeder::class,
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
+        $city = City::query()->first();
+
+        if (! $city) {
+            $city = City::create([
+                'UF' => 'SP',
+                'name_city' => 'Registro',
+            ]);
+        }
+
+        User::query()->firstOrCreate([
             'email' => 'test@example.com',
+        ], [
+            'is_admin' => false,
+            'is_freelancer' => true,
+            'complete_name' => 'Test User',
+            'cpf' => '12345678901',
+            'birth_date' => '1990-01-01',
+            'phone_number' => '13999990000',
+            'city_id' => $city->id,
+            'address' => 'Rua Teste, 100',
+            'professional_title' => 'Desenvolvedor Full Stack',
+            'portfolio_link' => null,
+            'bio' => 'Usuário padrão para testes locais.',
+            'password' => Hash::make('password'),
         ]);
     }
 }

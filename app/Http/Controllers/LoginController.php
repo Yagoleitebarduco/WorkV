@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\User;
-
 class LoginController extends Controller
 {
     public function showLoginScreen()
@@ -14,34 +12,60 @@ class LoginController extends Controller
         return view('Auth.Login.Login');
     }
 
+    public function showCompanyLoginScreen()
+    {
+        return view('Auth.Login.LoginCompany');
+    }
+
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
 
-        if (Auth::attempt(($credentials))) {
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-            dd($user);
+            $user = Auth::guard('web')->user();
+            $targetRoute = $user->is_freelancer ? 'home' : 'company.dashboard';
+            return redirect()->intended(route($targetRoute));
+        }
 
-            if ($user->is_freelancer == 1) {
-                return redirect()->route('home');
-            }
+        if (Auth::guard('company')->attempt($credentials)) {
+            $request->session()->regenerate();
 
-            if ($user->is_freelancer == 0) {
-                return redirect()->route('ccompany.dashboard');
-            }
+            return redirect()->intended(route('company.dashboard'));
         }
 
         return back()->withErrors([
             'email' => 'Email ou senha inválidos.',
+        ])->onlyInput('email');
+    }
+
+    public function loginCompany(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
         ]);
+
+        if (Auth::guard('company')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('company.dashboard'));
+        }
+
+        return back()->withErrors([
+            'email' => 'Credenciais de empresa inválidas.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+        Auth::guard('company')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
