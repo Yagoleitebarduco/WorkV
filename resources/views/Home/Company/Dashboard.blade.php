@@ -1,6 +1,7 @@
 @extends('Layouts.app')
 
 @section('title', 'Dashboard Empresa - WorkVale')
+@section('hideDefaultBottomNav', '1')
 
 @section('header')
 <div class="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex justify-between items-center">
@@ -409,8 +410,12 @@
         });
     }
     
- // Inicializar gráfico com dados do backend
-// const dadosGrafico = @json($dadosGrafico ?? ['labels' => ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'], 'values' => [12, 19, 15, 17, 22, 24]]);
+// Inicializar gráfico com fallback estático (evita erro de parse do Blade)
+const dadosGrafico = {
+    labels: ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+    values: [12, 19, 15, 17, 22, 24],
+};
+initChart(dadosGrafico);
 
 // Modal Configurações
 const settingsBtn = document.getElementById('settingsBtn');
@@ -453,7 +458,7 @@ const closeSettingsFooterBtn = document.getElementById('closeSettingsFooterBtn')
             
             // Redirecionamento baseado na navegação
             const rotas = {
-                'dashboard': '{{ route("empresa.dashboard") }}',
+                'dashboard': '{{ route("company.dashboard") }}',
                 'vagas': '{{ route("empresa.vagas") }}',
                 'candidatos': '{{ route("empresa.candidatos") }}',
                 'perfil': '{{ route("empresa.perfil") }}'

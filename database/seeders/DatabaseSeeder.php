@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -46,6 +47,26 @@ class DatabaseSeeder extends Seeder
             'professional_title' => 'Desenvolvedor Full Stack',
             'portfolio_link' => null,
             'bio' => 'Usuário padrão para testes locais.',
+            'password' => Hash::make('password'),
+        ]);
+
+        Company::query()->firstOrCreate([
+            'email' => 'empresa@workvale.com',
+        ], [
+            'is_admin' => false,
+            'is_freelancer' => false,
+            'company_name' => 'WorkVale Empresa Teste',
+            'description' => 'Conta padrão de empresa para testes locais.',
+            'cnpj_cpf' => '11222333000181',
+            'area_operation' => 'Tecnologia',
+            'assessment' => 5,
+            'representative_name' => 'Empresa Teste',
+            'phone_number' => '13999991111',
+            'city_id' => $city->id,
+            'cep' => '11900000',
+            'address' => 'Rua Empresa, 200',
+            'neighborhood' => 'Centro',
+            'number' => 200,
             'password' => Hash::make('password'),
         ]);
     }
