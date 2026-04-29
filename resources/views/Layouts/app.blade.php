@@ -15,6 +15,11 @@
 </head>
 
 <body class="font-sans">
+    @php
+        $isWebUser = auth('web')->check();
+        $isCompanyUser = auth('company')->check();
+        $hideDefaultBottomNav = trim($__env->yieldContent('hideDefaultBottomNav')) === '1';
+    @endphp
     <div class="max-w-md mx-auto relative min-h-screen">
         <!-- Header Profissional -->
         <div class="bg-linear-to-r from-Primary to-Primary-dark px-7 py-6 rounded-b-3xl mb-6">
@@ -26,34 +31,63 @@
             @yield('content')
         </div>
 
-        <!-- Bottom Navigation Profissional -->
-        <div
-            class=" fixed bottom-4 left-4 right-4 max-w-sm mx-auto rounded-full shadow-lg p-2 flex justify-around items-center border border-Dark bg-white/8 backdrop-blur-xl">
-            <a href="{{ route('home') }}"
-                class="flex flex-col items-center decoration-0  {{ request()->routeIs('home') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-home text-lg"></i>
-                <span class=" text-xs mt-1">Início</span>
-            </a>
+        @if (! $hideDefaultBottomNav)
+            @if ($isWebUser)
+                <!-- Bottom Navigation Freelancer -->
+                <div
+                    class=" fixed bottom-4 left-4 right-4 max-w-sm mx-auto rounded-full shadow-lg p-2 flex justify-around items-center border border-Dark bg-white/8 backdrop-blur-xl">
+                    <a href="{{ route('home') }}"
+                        class="flex flex-col items-center decoration-0  {{ request()->routeIs('home') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-home text-lg"></i>
+                        <span class=" text-xs mt-1">Início</span>
+                    </a>
 
-            <a href="{{ route('mural') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('mural') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-chart-bar text-lg"></i>
-                <span class=" text-xs mt-1">Mural</span>
-            </a>
+                    <a href="{{ route('mural') }}"
+                        class="flex flex-col items-center decoration-0 {{ request()->routeIs('mural') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-chart-bar text-lg"></i>
+                        <span class=" text-xs mt-1">Mural</span>
+                    </a>
 
-            <a href="{{ route('myjobs') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('myjobs') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-briefcase text-lg"></i>
-                <span class=" text-xs mt-1">Meus Jobs</span>
-            </a>
+                    <a href="{{ route('myjobs') }}"
+                        class="flex flex-col items-center decoration-0 {{ request()->routeIs('myjobs') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-briefcase text-lg"></i>
+                        <span class=" text-xs mt-1">Meus Jobs</span>
+                    </a>
 
-            <a href="{{ route('walet') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('walet') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-wallet text-lg"></i>
-                <span class=" text-xs mt-1">Carteira</span>
-            </a>
-        </div>
-        <div style="height: 5rem;"></div>
+                    <a href="{{ route('walet') }}"
+                        class="flex flex-col items-center decoration-0 {{ request()->routeIs('walet') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-wallet text-lg"></i>
+                        <span class=" text-xs mt-1">Carteira</span>
+                    </a>
+                </div>
+                <div style="height: 5rem;"></div>
+            @elseif ($isCompanyUser)
+                <!-- Bottom Navigation Empresa -->
+                <div
+                    class="fixed bottom-4 left-4 right-4 max-w-sm mx-auto rounded-full shadow-lg p-2 flex justify-around items-center border border-Dark bg-white/8 backdrop-blur-xl">
+                    <a href="{{ route('company.dashboard') }}"
+                        class="flex flex-col items-center decoration-0 {{ request()->routeIs('company.dashboard') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-chart-line text-lg"></i>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+
+                    <a href="{{ route('works.index') }}"
+                        class="flex flex-col items-center decoration-0 {{ request()->routeIs('works.*') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                        <i class="fas fa-briefcase text-lg"></i>
+                        <span class="text-xs mt-1">Vagas</span>
+                    </a>
+
+                    <form action="{{ route('logout') }}" method="POST" class="m-0">
+                        @csrf
+                        <button type="submit" class="flex flex-col items-center text-gray-600 hover:text-Primary-dark transition duration-200">
+                            <i class="fas fa-sign-out-alt text-lg"></i>
+                            <span class="text-xs mt-1">Sair</span>
+                        </button>
+                    </form>
+                </div>
+                <div style="height: 5rem;"></div>
+            @endif
+        @endif
     </div>
 </body>
 

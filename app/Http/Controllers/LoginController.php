@@ -17,19 +17,60 @@ class LoginController extends Controller
         return view('Auth.Login.Login');
     }
 
+    public function showCompanyLoginScreen()
+    {
+        return view('Auth.Login.LoginCompany');
+    }
+
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home');
+
+            $user = Auth::guard('web')->user();
+            $targetRoute = $user->is_freelancer ? 'home' : 'company.dashboard';
+            return redirect()->intended(route($targetRoute));
         }
+
+        if (Auth::guard('company')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('company.dashboard'));
+        }
+
+        return back()->withErrors([
+            'email' => 'Email ou senha inválidos.',
+        ])->onlyInput('email');
+    }
+
+    public function loginCompany(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if (Auth::guard('company')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('company.dashboard'));
+        }
+
+        return back()->withErrors([
+            'email' => 'Credenciais de empresa inválidas.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+        Auth::guard('company')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

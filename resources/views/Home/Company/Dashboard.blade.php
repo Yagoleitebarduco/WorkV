@@ -1,6 +1,7 @@
 @extends('Layouts.app')
 
 @section('title', 'Dashboard Empresa - WorkVale')
+@section('hideDefaultBottomNav', '1')
 
 @section('header')
     <div class="sticky top-0 z-10 bg-white border-b border-gray-100 px-4 py-3 flex justify-between items-center">
@@ -519,7 +520,88 @@
                 if (rotas[nav]) {
                     window.location.href = rotas[nav];
                 }
+            }
+        });
+    }
+    
+// Inicializar gráfico com fallback estático (evita erro de parse do Blade)
+const dadosGrafico = {
+    labels: ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+    values: [12, 19, 15, 17, 22, 24],
+};
+initChart(dadosGrafico);
+
+// Modal Configurações
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+const closeSettingsFooterBtn = document.getElementById('closeSettingsFooterBtn');
+    
+    function openSettingsModal() {
+        settingsModal.classList.remove('hidden');
+        settingsModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeSettingsModal() {
+        settingsModal.classList.add('hidden');
+        settingsModal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+    
+    settingsBtn.addEventListener('click', openSettingsModal);
+    closeSettingsBtn.addEventListener('click', closeSettingsModal);
+    closeSettingsFooterBtn.addEventListener('click', closeSettingsModal);
+    
+    // Fechar ao clicar no overlay
+    if (settingsModal) {
+        settingsModal.querySelector('.absolute.inset-0.bg-black\\/50').addEventListener('click', closeSettingsModal);
+    }
+    
+    // Bottom Navigation
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const nav = this.dataset.nav;
+            navItems.forEach(nav => {
+                nav.classList.remove('active');
+                nav.style.color = '#9ca3af';
             });
+            this.classList.add('active');
+            this.style.color = 'var(--primary-dark)';
+            
+            // Redirecionamento baseado na navegação
+            const rotas = {
+                'dashboard': '{{ route("company.dashboard") }}',
+                'vagas': '{{ route("empresa.vagas") }}',
+                'candidatos': '{{ route("empresa.candidatos") }}',
+                'perfil': '{{ route("empresa.perfil") }}'
+            };
+            
+            if (rotas[nav]) {
+                window.location.href = rotas[nav];
+            }
+        });
+    });
+    
+    // Nova vaga button
+    const novaVagaBtn = document.getElementById('novaVagaBtn');
+    if (novaVagaBtn) {
+        novaVagaBtn.addEventListener('click', () => {
+            window.location.href = '{{ route("empresa.vagas.criar") }}';
+        });
+    }
+    
+    // Próximos passos clicks
+    const nextSteps = document.querySelectorAll('.bg-light');
+    nextSteps.forEach(step => {
+        step.addEventListener('click', () => {
+            const title = step.querySelector('.font-medium')?.innerText;
+            if (title && title.includes('Propostas')) {
+                window.location.href = '{{ route("empresa.propostas") }}';
+            } else if (title && title.includes('Entrevistas')) {
+                window.location.href = '{{ route("empresa.entrevistas") }}';
+            }
         });
 
         // Nova vaga button
