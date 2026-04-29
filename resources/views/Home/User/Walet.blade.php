@@ -72,6 +72,55 @@
             </div>
             <canvas id="earningsChart" width="400" height="200"></canvas>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('earningsChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'line', // ou 'bar' - escolha o que preferir
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+                datasets: [{
+                    label: 'Ganhos (R$)',
+                    data: [12000, 19000, 15000, 22000, 28000, 25000],
+                    borderColor: 'rgba(106, 38, 152, 1)',
+                    
+                    backgroundColor: 'rgba(106, 38, 152, 0.6)',
+                
+                    borderWidth: 2,
+                    tension: 0, // curva suave (para gráfico de linha)
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false // esconde legenda pois você já tem uma manual
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'R$ ' + context.raw.toLocaleString('pt-BR');
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'R$ ' + value.toLocaleString('pt-BR');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+        </script>
 
         <!-- Chave PIX Cadastrada -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6 pix-card">
