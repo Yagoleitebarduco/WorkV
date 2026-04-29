@@ -26,7 +26,7 @@
     <!-- Saudação Profissional -->
     <div class="mb-6">
         <h2 class="text-2xl font-semibold text-white mb-1">
-            Olá, <span class=" font">{{ Auth::user()->complete_name }}</span>
+            Olá, <span class="font">{{ Auth::user()->complete_name }}</span>
         </h2>
 
         <div>
@@ -39,6 +39,7 @@
             </form>
 
         </div>
+        
         <p class="text-xs text-gray-300">3 novos desafios disponíveis para você</p>
     </div>
 

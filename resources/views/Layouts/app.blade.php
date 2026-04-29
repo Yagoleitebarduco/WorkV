@@ -29,29 +29,65 @@
         <!-- Bottom Navigation Profissional -->
         <div
             class=" fixed bottom-4 left-4 right-4 max-w-sm mx-auto rounded-full shadow-lg p-2 flex justify-around items-center border border-Dark bg-white/8 backdrop-blur-xl">
-            <a href="{{ route('home') }}"
-                class="flex flex-col items-center decoration-0  {{ request()->routeIs('home') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-home text-lg"></i>
-                <span class=" text-xs mt-1">Início</span>
-            </a>
+            {{-- Inicio | Dashboard --}}
+            @if (Auth::guard('company'))
+                <a href="{{ route('company.dashboard') }}"
+                    class="flex flex-col items-center decoration-0  {{ request()->routeIs('company.dashboard') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class=" text-xs mt-1">Início</span>
+                </a>
+            @else
+                <a href="{{ route('home') }}"
+                    class="flex flex-col items-center decoration-0  {{ request()->routeIs('home') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class=" text-xs mt-1">Início</span>
+                </a>
+            @endif
 
-            <a href="{{ route('mural') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('mural') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-chart-bar text-lg"></i>
-                <span class=" text-xs mt-1">Mural</span>
-            </a>
+            {{-- Mural | ? --}}
+            @if (Auth::guard('company'))
+                <a href="{{ route('company.newWork') }}"
+                    class="flex flex-col items-center decoration-0  {{ request()->routeIs('company.newWork') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class=" text-xs mt-1">Novos Trabalhos</span>
+                </a>
+            @else
+                <a href="{{ route('mural') }}"
+                    class="flex flex-col items-center decoration-0 {{ request()->routeIs('mural') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-chart-bar text-lg"></i>
+                    <span class=" text-xs mt-1">Mural</span>
+                </a>
+            @endif
 
-            <a href="{{ route('myjobs') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('myjobs') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-briefcase text-lg"></i>
-                <span class=" text-xs mt-1">Meus Jobs</span>
-            </a>
+            {{-- MeusJobs | ? --}}
+            @if (Auth::guard('company'))
+                <a href="{{ route('company.dashboard') }}"
+                    class="flex flex-col items-center decoration-0  {{ request()->routeIs('company.dashboard') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fa-solid fa-user"></i>
+                    <span class=" text-xs mt-1">Candidatos</span>
+                </a>
+            @else
+                <a href="{{ route('myjobs') }}"
+                    class="flex flex-col items-center decoration-0 {{ request()->routeIs('myjobs') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-briefcase text-lg"></i>
+                    <span class=" text-xs mt-1">Meus Jobs</span>
+                </a>
+            @endif
 
-            <a href="{{ route('walet') }}"
-                class="flex flex-col items-center decoration-0 {{ request()->routeIs('walet') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
-                <i class="fas fa-wallet text-lg"></i>
-                <span class=" text-xs mt-1">Carteira</span>
-            </a>
+            {{-- Walet | ? --}}
+            @if (Auth::guard('company'))
+                <a href="{{ route('company.dashboard') }}"
+                    class="flex flex-col items-center decoration-0 {{ request()->routeIs('company.dashboard') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-wallet text-lg"></i>
+                    <span class=" text-xs mt-1">Carteira</span>
+                </a>
+            @else
+                <a href="{{ route('walet') }}"
+                    class="flex flex-col items-center decoration-0 {{ request()->routeIs('walet') ? 'text-Primary-dark' : 'text-gray-600 hover:text-Primary-dark transition duration-200' }}">
+                    <i class="fas fa-wallet text-lg"></i>
+                    <span class=" text-xs mt-1">Carteira</span>
+                </a>
+            @endif
         </div>
         <div style="height: 5rem;"></div>
     </div>

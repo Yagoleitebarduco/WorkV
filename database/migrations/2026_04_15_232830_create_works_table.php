@@ -15,14 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name_work');
             $table->string('description_work');
-            $table->foreignId('skill_id')->constrained('skills')->onDelete('cascade');
             $table->foreignId('companies_id')->constrained('companies')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->integer('type_work');
+            $table->string('type_work');
             $table->integer('duration');
             $table->decimal('payment', 10, 2);
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

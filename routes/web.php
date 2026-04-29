@@ -39,9 +39,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/mural', [MuralController::class, 'showToMuralScreen'])->name('mural');
     Route::get('/user/myjobs', [MyJobsController::class, 'showToMyJobsScreen'])->name('myjobs');
     Route::get('/user/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
+});
 
+Route::middleware(['auth:company'])->group(function () {
     // Company
     Route::get('/company/dashboard', [HomeController::class, 'showToDashboardCompanyScreen'])->name('company.dashboard');
+
+    Route::get('/company/newwork', [MuralController::class, 'showToNewWorkScreen'])->name('company.newWork');
+    Route::post('/company/newwork', [MuralController::class, 'storeNewWork']);
 });
 
 
