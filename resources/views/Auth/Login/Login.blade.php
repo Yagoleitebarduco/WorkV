@@ -38,6 +38,12 @@
                     <p class="text-sm text-gray-500 mt-1">Acesse sua conta para continuar</p>
                 </div>
 
+                @if ($errors->any())
+                    <div class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <form id="loginForm" method="POST" action="{{ route('login') }}">
                     @csrf
                     <!-- Campo E-mail -->
@@ -49,7 +55,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fas fa-envelope text-gray-400 text-sm"></i>
                             </div>
-                            <input type="email" id="email" name="email"
+                            <input type="email" id="email" name="email" value="{{ old('email') }}"
                                 class="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-Primary-dark focus:outline-0 focus:border-2 transition duration-150 ease-in-out"
                                 placeholder="seu@email.com" required>
                             @error('email')
@@ -104,6 +110,12 @@
                         <a href="{{ route('register') }}" id="signupLink"
                             class="font-semibold py-1rounded-2xl text-Primary-dark">
                             Cadastre-se
+                        </a>
+                    </p>
+                    <p class="text-sm text-gray-600 mt-2">
+                        É uma empresa?
+                        <a href="{{ route('company.login') }}" class="font-semibold text-Primary-dark">
+                            Acesse o login empresarial
                         </a>
                     </p>
                     <div class="flex justify-center gap-4 mt-3 text-xs text-gray-400">

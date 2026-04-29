@@ -1,6 +1,7 @@
 @extends('Layouts.app')
 
 @section('title', 'Dashboard Empresa - WorkVale')
+@section('hideDefaultBottomNav', '1')
 
 @section('header')
     <div class="top-0 z-10 border-b border-gray-100 pb-4 py-3 flex justify-between items-center">
@@ -176,4 +177,362 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+
+    <!-- Modal de Configurações (engrenagem) -->
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl max-w-sm w-full p-5 mx-4 shadow-2xl"
+            style="animation: fadeInUp 0.2s ease-out;">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Configurações</h3>
+                <button id="closeSettingsBtn" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+
+            <form id="settingsForm" method="POST" action="{{ route('empresa.configuracoes.atualizar') }}">
+                @csrf
+                @method('PUT')
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-bell" style="color: var(--primary-dark);"></i>
+                            <span class="text-sm text-gray-700">Notificações push</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="notificacoes_push" class="sr-only peer" value="1"
+                                {{ $configuracoes['notificacoes_push'] ?? true ? 'checked' : '' }}>
+                            <div
+                                class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#6A2698]">
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-envelope" style="color: var(--primary-dark);"></i>
+                            <span class="text-sm text-gray-700">Notificações por e-mail</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="notificacoes_email" class="sr-only peer" value="1"
+                                {{ $configuracoes['notificacoes_email'] ?? true ? 'checked' : '' }}>
+                            <div
+                                class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#6A2698]">
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-language" style="color: var(--primary-dark);"></i>
+                            <span class="text-sm text-gray-700">Idioma</span>
+                        </div>
+                        <select name="idioma" class="text-sm border border-gray-200 rounded-lg px-2 py-1">
+                            <option value="pt" {{ ($configuracoes['idioma'] ?? 'pt') == 'pt' ? 'selected' : '' }}>
+                                Português</option>
+                            <option value="en" {{ ($configuracoes['idioma'] ?? '') == 'en' ? 'selected' : '' }}>
+                                English</option>
+                            <option value="es" {{ ($configuracoes['idioma'] ?? '') == 'es' ? 'selected' : '' }}>
+                                Español</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-shield-alt" style="color: var(--primary-dark);"></i>
+                            <span class="text-sm text-gray-700">Privacidade</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+                    </div>
+
+                    <div class="flex items-center justify-between py-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-info-circle" style="color: var(--primary-dark);"></i>
+                            <span class="text-sm text-gray-700">Versão do app</span>
+                        </div>
+                        <span class="text-xs text-gray-500">2.0.1</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full mt-5 py-2 rounded-lg text-white font-medium"
+                    style="background: var(--primary-dark);">
+                    Salvar Configurações
+                </button>
+            </form>
+
+            <button id="closeSettingsFooterBtn"
+                class="w-full mt-3 py-2 rounded-lg border border-gray-300 text-gray-600 font-medium">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Gráfico de Contratações com dados do backend
+        const hiringCtx = document.getElementById('hiringChart').getContext('2d');
+        let hiringChart = null;
+
+        function initChart(dados) {
+            if (hiringChart) {
+                hiringChart.destroy();
+            }
+
+            hiringChart = new Chart(hiringCtx, {
+                type: 'line',
+                data: {
+                    labels: dados.labels || ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+                    datasets: [{
+                        label: 'Contratações',
+                        data: dados.values || [12, 19, 15, 17, 22, 24],
+                        borderColor: '#6A2698',
+                        backgroundColor: 'rgba(106, 38, 152, 0.05)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#6A2698',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.raw} contratações`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#e5e7eb'
+                            },
+                            ticks: {
+                                stepSize: 8
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Inicializar gráfico com dados do backend
+        // const dadosGrafico = @json($dadosGrafico ?? ['labels' => ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'], 'values' => [12, 19, 15, 17, 22, 24]]);
+
+        // Modal Configurações
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const closeSettingsFooterBtn = document.getElementById('closeSettingsFooterBtn');
+
+        function openSettingsModal() {
+            settingsModal.classList.remove('hidden');
+            settingsModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSettingsModal() {
+            settingsModal.classList.add('hidden');
+            settingsModal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        settingsBtn.addEventListener('click', openSettingsModal);
+        closeSettingsBtn.addEventListener('click', closeSettingsModal);
+        closeSettingsFooterBtn.addEventListener('click', closeSettingsModal);
+
+        // Fechar ao clicar no overlay
+        if (settingsModal) {
+            settingsModal.querySelector('.absolute.inset-0.bg-black\\/50').addEventListener('click', closeSettingsModal);
+        }
+
+        // Bottom Navigation
+        const navItems = document.querySelectorAll('.bottom-nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const nav = this.dataset.nav;
+                navItems.forEach(nav => {
+                    nav.classList.remove('active');
+                    nav.style.color = '#9ca3af';
+                });
+                this.classList.add('active');
+                this.style.color = 'var(--primary-dark)';
+
+                // Redirecionamento baseado na navegação
+                const rotas = {
+                    'dashboard': '{{ route('empresa.dashboard') }}',
+                    'vagas': '{{ route('empresa.vagas') }}',
+                    'candidatos': '{{ route('empresa.candidatos') }}',
+                    'perfil': '{{ route('empresa.perfil') }}'
+                };
+
+                if (rotas[nav]) {
+                    window.location.href = rotas[nav];
+                }
+            }
+        });
+    }
+    
+// Inicializar gráfico com fallback estático (evita erro de parse do Blade)
+const dadosGrafico = {
+    labels: ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+    values: [12, 19, 15, 17, 22, 24],
+};
+initChart(dadosGrafico);
+
+// Modal Configurações
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+const closeSettingsFooterBtn = document.getElementById('closeSettingsFooterBtn');
+    
+    function openSettingsModal() {
+        settingsModal.classList.remove('hidden');
+        settingsModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeSettingsModal() {
+        settingsModal.classList.add('hidden');
+        settingsModal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+    
+    settingsBtn.addEventListener('click', openSettingsModal);
+    closeSettingsBtn.addEventListener('click', closeSettingsModal);
+    closeSettingsFooterBtn.addEventListener('click', closeSettingsModal);
+    
+    // Fechar ao clicar no overlay
+    if (settingsModal) {
+        settingsModal.querySelector('.absolute.inset-0.bg-black\\/50').addEventListener('click', closeSettingsModal);
+    }
+    
+    // Bottom Navigation
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const nav = this.dataset.nav;
+            navItems.forEach(nav => {
+                nav.classList.remove('active');
+                nav.style.color = '#9ca3af';
+            });
+            this.classList.add('active');
+            this.style.color = 'var(--primary-dark)';
+            
+            // Redirecionamento baseado na navegação
+            const rotas = {
+                'dashboard': '{{ route("company.dashboard") }}',
+                'vagas': '{{ route("empresa.vagas") }}',
+                'candidatos': '{{ route("empresa.candidatos") }}',
+                'perfil': '{{ route("empresa.perfil") }}'
+            };
+            
+            if (rotas[nav]) {
+                window.location.href = rotas[nav];
+            }
+        });
+    });
+    
+    // Nova vaga button
+    const novaVagaBtn = document.getElementById('novaVagaBtn');
+    if (novaVagaBtn) {
+        novaVagaBtn.addEventListener('click', () => {
+            window.location.href = '{{ route("empresa.vagas.criar") }}';
+        });
+    }
+    
+    // Próximos passos clicks
+    const nextSteps = document.querySelectorAll('.bg-light');
+    nextSteps.forEach(step => {
+        step.addEventListener('click', () => {
+            const title = step.querySelector('.font-medium')?.innerText;
+            if (title && title.includes('Propostas')) {
+                window.location.href = '{{ route("empresa.propostas") }}';
+            } else if (title && title.includes('Entrevistas')) {
+                window.location.href = '{{ route("empresa.entrevistas") }}';
+            }
+        });
+
+        // Nova vaga button
+        const novaVagaBtn = document.getElementById('novaVagaBtn');
+        if (novaVagaBtn) {
+            novaVagaBtn.addEventListener('click', () => {
+                window.location.href = '{{ route('empresa.vagas.criar') }}';
+            });
+        }
+
+        // Próximos passos clicks
+        const nextSteps = document.querySelectorAll('.bg-light');
+        nextSteps.forEach(step => {
+            step.addEventListener('click', () => {
+                const title = step.querySelector('.font-medium')?.innerText;
+                if (title && title.includes('Propostas')) {
+                    window.location.href = '{{ route('empresa.propostas') }}';
+                } else if (title && title.includes('Entrevistas')) {
+                    window.location.href = '{{ route('empresa.entrevistas') }}';
+                }
+            });
+        });
+
+        // Seleção de ano para o gráfico
+        const anoSelect = document.getElementById('anoSelect');
+        if (anoSelect) {
+            anoSelect.addEventListener('change', async function() {
+                const ano = this.value;
+                try {
+                    const response = await fetch(`{{ route('empresa.grafico.dados') }}?ano=${ano}`);
+                    const data = await response.json();
+                    initChart(data);
+                } catch (error) {
+                    console.error('Erro ao carregar dados do gráfico:', error);
+                }
+            });
+        }
+
+        // Form de configurações
+        const settingsForm = document.getElementById('settingsForm');
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    });
+
+                    if (response.ok) {
+                        alert('Configurações salvas com sucesso!');
+                        closeSettingsModal();
+                    } else {
+                        alert('Erro ao salvar configurações');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Erro ao salvar configurações');
+                }
+            });
+        }
+    </script>
+>>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
 @endsection
