@@ -1,11 +1,6 @@
 <?php
 
-<<<<<<< HEAD
-=======
-use App\Models\User;
-use App\Models\Company;
 
->>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
 return [
 
     /*
@@ -46,10 +41,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-<<<<<<< HEAD
 
-=======
->>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
         'company' => [
             'driver' => 'session',
             'provider' => 'companies',
@@ -82,10 +74,6 @@ return [
         'companies' => [
             'driver' => 'eloquent',
             'model' => App\Models\Company::class,
-        ],
-        'companies' => [
-            'driver' => 'eloquent',
-            'model' => Company::class,
         ],
 
         // 'users' => [

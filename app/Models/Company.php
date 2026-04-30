@@ -9,11 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class Company extends Authenticatable
 {
     use HasFactory, Notifiable;
-<<<<<<< HEAD
 
     protected $table = 'companies';
-=======
->>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
 
     protected $fillable = [
         'company_name',
@@ -32,14 +29,7 @@ class Company extends Authenticatable
         'password',
     ];
 
-<<<<<<< HEAD
     protected $hidden = ['password', 'remember_token'];
-=======
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
->>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
 
     public function city()
     {

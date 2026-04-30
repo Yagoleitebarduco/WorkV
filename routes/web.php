@@ -44,39 +44,10 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/user/walet', [WaletController::class, 'showToWaletScreen'])->name('walet');
 });
 
-<<<<<<< HEAD
 Route::middleware(['auth:company'])->group(function () {
     // Company
     Route::get('/company/dashboard', [HomeController::class, 'showToDashboardCompanyScreen'])->name('company.dashboard');
 
     Route::get('/company/newwork', [MuralController::class, 'showToNewWorkScreen'])->name('company.newWork');
     Route::post('/company/newwork', [MuralController::class, 'storeNewWork']);
-=======
-Route::middleware('auth:company')->group(function () {
-    // Company
-    Route::get('/company/dashboard', [HomeController::class, 'showToDashboardCompanyScreen'])
-        ->name('company.dashboard');
-    Route::resource('/company/works', WorksController::class)->names('works');
-
-    // Alias e rotas auxiliares esperadas pelo dashboard da empresa
-    Route::get('/company/vagas', fn () => redirect()->route('works.index'))->name('empresa.vagas');
-    Route::get('/company/vagas/criar', fn () => redirect()->route('works.create'))->name('empresa.vagas.criar');
-    Route::get('/company/candidatos', fn () => redirect()->route('company.dashboard'))->name('empresa.candidatos');
-    Route::get('/company/perfil', fn () => redirect()->route('company.dashboard'))->name('empresa.perfil');
-    Route::get('/company/propostas', fn () => redirect()->route('company.dashboard'))->name('empresa.propostas');
-    Route::get('/company/entrevistas', fn () => redirect()->route('company.dashboard'))->name('empresa.entrevistas');
-    Route::put('/company/configuracoes', fn () => back()->with('success', 'Configurações salvas com sucesso.'))
-        ->name('empresa.configuracoes.atualizar');
-    Route::get('/company/grafico/dados', fn () => response()->json([
-        'labels' => ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
-        'values' => [12, 19, 15, 17, 22, 24],
-    ]))->name('empresa.grafico.dados');
->>>>>>> 1f499d5948ca58facf471f6ede8b282c101fe61a
 });
-
-
-
-
-// Route::get('/dashboard', function () {
-//     return view('Home.Company.Dashboard');
-// })->name('dashboard');
